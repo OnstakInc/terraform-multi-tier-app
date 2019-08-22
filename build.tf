@@ -24,17 +24,17 @@ data "vsphere_compute_cluster" "cluster" {
 }
 
 data "vsphere_network" "network_web" {
-  name          = "Ansible-ACI-Integrations|Ansible-ACI-VRF|LB-EPG"
+  name          = "Ansible-ACI-Integrations|Ansible-ACI-AP|LB-EPG"
   datacenter_id = "${data.vsphere_datacenter.dc.id}"
 }
 
 data "vsphere_network" "network_app" {
-  name          = "Ansible-ACI-Integrations|Ansible-ACI-VRF|APP-EPG"
+  name          = "Ansible-ACI-Integrations|Ansible-ACI-AP|APP-EPG"
   datacenter_id = "${data.vsphere_datacenter.dc.id}"
 }
 
 data "vsphere_network" "network_db" {
-  name          = "Ansible-ACI-Integrations|Ansible-ACI-VRF|DB-EPG"
+  name          = "Ansible-ACI-Integrations|Ansible-ACI-AP|DB-EPG"
   datacenter_id = "${data.vsphere_datacenter.dc.id}"
 }
 
