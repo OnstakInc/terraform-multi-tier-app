@@ -24,17 +24,17 @@ data "vsphere_compute_cluster" "cluster" {
 }
 
 data "vsphere_network" "network_web" {
-  name          = "HX-ACI-Integrations|HX-USER-AP|LB-EPG"
+  name          = "Ansible-ACI-Integrations|Ansible-ACI-VRF|LB-EPG"
   datacenter_id = "${data.vsphere_datacenter.dc.id}"
 }
 
 data "vsphere_network" "network_app" {
-  name          = "HX-ACI-Integrations|HX-USER-AP|APP-EPG"
+  name          = "Ansible-ACI-Integrations|Ansible-ACI-VRF|APP-EPG"
   datacenter_id = "${data.vsphere_datacenter.dc.id}"
 }
 
 data "vsphere_network" "network_db" {
-  name          = "HX-ACI-Integrations|HX-USER-AP|DB-EPG"
+  name          = "Ansible-ACI-Integrations|Ansible-ACI-VRF|DB-EPG"
   datacenter_id = "${data.vsphere_datacenter.dc.id}"
 }
 
@@ -46,8 +46,8 @@ data "vsphere_virtual_machine" "template" {
 # The Resource section creates the virtual machine, in this case 
 # from a template
 # <Initialize Virtual Machine Deployments>
-resource "vsphere_virtual_machine" "web_server01" {
-  name             = "aci-demo-web-server-managed"
+resource "vsphere_virtual_machine" "lb_server01" {
+  name             = "aci-demo-lb-server-managed"
   resource_pool_id = "${data.vsphere_compute_cluster.cluster.resource_pool_id}"
   datastore_id     = "${data.vsphere_datastore.datastore.id}"
 
@@ -62,7 +62,7 @@ resource "vsphere_virtual_machine" "web_server01" {
   }
 
   disk {
-    label            = "web_server_disk0"
+    label            = "lb_server_disk0"
     size             = "${data.vsphere_virtual_machine.template.disks.0.size}"
     eagerly_scrub    = "${data.vsphere_virtual_machine.template.disks.0.eagerly_scrub}"
     thin_provisioned = "${data.vsphere_virtual_machine.template.disks.0.thin_provisioned}"
@@ -73,23 +73,23 @@ resource "vsphere_virtual_machine" "web_server01" {
 
     customize {
       linux_options {
-        host_name = "web-server-01"
+        host_name = "aci-demo-lb-server-managed"
         domain    = "onstak.local"
       }
 
       network_interface {
-        ipv4_address    = "172.16.215.180"
+        ipv4_address    = "192.168.11.10"
         ipv4_netmask    = 24
         dns_server_list = ["10.3.1.102"]
       }
 
-      ipv4_gateway = "172.16.215.1"
+      ipv4_gateway = "192.168.11.1"
     }
   }
 }
 
 resource "vsphere_virtual_machine" "app_server01" {
-  name             = "aci-demo-app-server-managed"
+  name             = "aci-demo-app-orders-server-managed"
   resource_pool_id = "${data.vsphere_compute_cluster.cluster.resource_pool_id}"
   datastore_id     = "${data.vsphere_datastore.datastore.id}"
 
@@ -115,17 +115,101 @@ resource "vsphere_virtual_machine" "app_server01" {
 
     customize {
       linux_options {
-        host_name = "app-server-01"
+        host_name = "aci-demo-app-orders-server-managed"
         domain    = "onstak.local"
       }
 
       network_interface {
-        ipv4_address    = "172.16.216.180"
+        ipv4_address    = "192.168.12.11"
         ipv4_netmask    = 24
         dns_server_list = ["10.3.1.102"]
       }
 
-      ipv4_gateway = "172.16.216.1"
+      ipv4_gateway = "192.168.12.1"
+    }
+  }
+}
+
+resource "vsphere_virtual_machine" "app_server02" {
+  name             = "aci-demo-app-shop-server-managed"
+  resource_pool_id = "${data.vsphere_compute_cluster.cluster.resource_pool_id}"
+  datastore_id     = "${data.vsphere_datastore.datastore.id}"
+
+  num_cpus  = 1
+  memory    = 1024
+  guest_id  = "${data.vsphere_virtual_machine.template.guest_id}"
+  scsi_type = "${data.vsphere_virtual_machine.template.scsi_type}"
+
+  network_interface {
+    network_id   = "${data.vsphere_network.network_app.id}"
+    adapter_type = "${data.vsphere_virtual_machine.template.network_interface_types[0]}"
+  }
+
+  disk {
+    label            = "app_server_disk0"
+    size             = "${data.vsphere_virtual_machine.template.disks.0.size}"
+    eagerly_scrub    = "${data.vsphere_virtual_machine.template.disks.0.eagerly_scrub}"
+    thin_provisioned = "${data.vsphere_virtual_machine.template.disks.0.thin_provisioned}"
+  }
+
+  clone {
+    template_uuid = "${data.vsphere_virtual_machine.template.id}"
+
+    customize {
+      linux_options {
+        host_name = "aci-demo-app-shop-server-managed"
+        domain    = "onstak.local"
+      }
+
+      network_interface {
+        ipv4_address    = "192.168.12.12"
+        ipv4_netmask    = 24
+        dns_server_list = ["10.3.1.102"]
+      }
+
+      ipv4_gateway = "192.168.12.1"
+    }
+  }
+}
+
+resource "vsphere_virtual_machine" "app_server03" {
+  name             = "aci-demo-app-cart-server-managed"
+  resource_pool_id = "${data.vsphere_compute_cluster.cluster.resource_pool_id}"
+  datastore_id     = "${data.vsphere_datastore.datastore.id}"
+
+  num_cpus  = 1
+  memory    = 1024
+  guest_id  = "${data.vsphere_virtual_machine.template.guest_id}"
+  scsi_type = "${data.vsphere_virtual_machine.template.scsi_type}"
+
+  network_interface {
+    network_id   = "${data.vsphere_network.network_app.id}"
+    adapter_type = "${data.vsphere_virtual_machine.template.network_interface_types[0]}"
+  }
+
+  disk {
+    label            = "app_server_disk0"
+    size             = "${data.vsphere_virtual_machine.template.disks.0.size}"
+    eagerly_scrub    = "${data.vsphere_virtual_machine.template.disks.0.eagerly_scrub}"
+    thin_provisioned = "${data.vsphere_virtual_machine.template.disks.0.thin_provisioned}"
+  }
+
+  clone {
+    template_uuid = "${data.vsphere_virtual_machine.template.id}"
+
+    customize {
+      linux_options {
+        host_name = "aci-demo-app-cart-server-managed"
+        domain    = "onstak.local"
+      }
+
+      network_interface {
+        ipv4_address    = "192.168.12.13"
+        ipv4_netmask    = 24
+        dns_server_list = ["10.3.1.102"]
+      }
+
+      ipv4_gateway = "192.168.12.1"
     }
   }
 }
@@ -157,17 +241,17 @@ resource "vsphere_virtual_machine" "db_server01" {
 
     customize {
       linux_options {
-        host_name = "db-server-01"
+        host_name = "aci-demo-db-server-managed"
         domain    = "onstak.local"
       }
 
       network_interface {
-        ipv4_address    = "172.16.217.180"
+        ipv4_address    = "192.168.13.10"
         ipv4_netmask    = 24
         dns_server_list = ["10.3.1.102"]
       }
 
-      ipv4_gateway = "172.16.217.1"
+      ipv4_gateway = "192.168.13.1"
     }
   }
 }
