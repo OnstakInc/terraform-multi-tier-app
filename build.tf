@@ -47,7 +47,7 @@ data "vsphere_virtual_machine" "template" {
 # from a template
 # <Initialize Virtual Machine Deployments>
 resource "vsphere_virtual_machine" "lb_server01" {
-  name             = "aci-demo-lb-server-managed"
+  name             = "tec-lb-server-managed"
   resource_pool_id = "${data.vsphere_compute_cluster.cluster.resource_pool_id}"
   datastore_id     = "${data.vsphere_datastore.datastore.id}"
 
@@ -62,7 +62,7 @@ resource "vsphere_virtual_machine" "lb_server01" {
   }
 
   disk {
-    label            = "lb_server_disk0"
+    label            = "tec_lb_server_disk0"
     size             = "${data.vsphere_virtual_machine.template.disks.0.size}"
     eagerly_scrub    = "${data.vsphere_virtual_machine.template.disks.0.eagerly_scrub}"
     thin_provisioned = "${data.vsphere_virtual_machine.template.disks.0.thin_provisioned}"
@@ -73,7 +73,7 @@ resource "vsphere_virtual_machine" "lb_server01" {
 
     customize {
       linux_options {
-        host_name = "aci-demo-lb-server-managed"
+        host_name = "tec-lb-server-managed"
         domain    = "onstak.local"
       }
 
@@ -90,7 +90,7 @@ resource "vsphere_virtual_machine" "lb_server01" {
 }
 
 resource "vsphere_virtual_machine" "app_server01" {
-  name             = "aci-demo-app-orders-server-managed"
+  name             = "tec-app-orders-server-managed"
   resource_pool_id = "${data.vsphere_compute_cluster.cluster.resource_pool_id}"
   datastore_id     = "${data.vsphere_datastore.datastore.id}"
 
@@ -105,7 +105,7 @@ resource "vsphere_virtual_machine" "app_server01" {
   }
 
   disk {
-    label            = "app_server_disk0"
+    label            = "tec_app_server_disk0"
     size             = "${data.vsphere_virtual_machine.template.disks.0.size}"
     eagerly_scrub    = "${data.vsphere_virtual_machine.template.disks.0.eagerly_scrub}"
     thin_provisioned = "${data.vsphere_virtual_machine.template.disks.0.thin_provisioned}"
@@ -116,7 +116,7 @@ resource "vsphere_virtual_machine" "app_server01" {
 
     customize {
       linux_options {
-        host_name = "aci-demo-app-orders-server-managed"
+        host_name = "tec-app-orders-server-managed"
         domain    = "onstak.local"
       }
 
@@ -133,7 +133,7 @@ resource "vsphere_virtual_machine" "app_server01" {
 }
 
 resource "vsphere_virtual_machine" "app_server02" {
-  name             = "aci-demo-app-shop-server-managed"
+  name             = "tec-app-shop-server-managed"
   resource_pool_id = "${data.vsphere_compute_cluster.cluster.resource_pool_id}"
   datastore_id     = "${data.vsphere_datastore.datastore.id}"
 
@@ -148,7 +148,7 @@ resource "vsphere_virtual_machine" "app_server02" {
   }
 
   disk {
-    label            = "app_server_disk0"
+    label            = "tec_app_server_disk0"
     size             = "${data.vsphere_virtual_machine.template.disks.0.size}"
     eagerly_scrub    = "${data.vsphere_virtual_machine.template.disks.0.eagerly_scrub}"
     thin_provisioned = "${data.vsphere_virtual_machine.template.disks.0.thin_provisioned}"
@@ -159,7 +159,7 @@ resource "vsphere_virtual_machine" "app_server02" {
 
     customize {
       linux_options {
-        host_name = "aci-demo-app-shop-server-managed"
+        host_name = "tec-app-shop-server-managed"
         domain    = "onstak.local"
       }
 
@@ -176,7 +176,7 @@ resource "vsphere_virtual_machine" "app_server02" {
 }
 
 resource "vsphere_virtual_machine" "app_server03" {
-  name             = "aci-demo-app-cart-server-managed"
+  name             = "tec-app-cart-server-managed"
   resource_pool_id = "${data.vsphere_compute_cluster.cluster.resource_pool_id}"
   datastore_id     = "${data.vsphere_datastore.datastore.id}"
 
@@ -191,7 +191,7 @@ resource "vsphere_virtual_machine" "app_server03" {
   }
 
   disk {
-    label            = "app_server_disk0"
+    label            = "tec_app_server_disk0"
     size             = "${data.vsphere_virtual_machine.template.disks.0.size}"
     eagerly_scrub    = "${data.vsphere_virtual_machine.template.disks.0.eagerly_scrub}"
     thin_provisioned = "${data.vsphere_virtual_machine.template.disks.0.thin_provisioned}"
@@ -202,7 +202,7 @@ resource "vsphere_virtual_machine" "app_server03" {
 
     customize {
       linux_options {
-        host_name = "aci-demo-app-cart-server-managed"
+        host_name = "tec-app-cart-server-managed"
         domain    = "onstak.local"
       }
 
@@ -219,7 +219,7 @@ resource "vsphere_virtual_machine" "app_server03" {
 }
 
 resource "vsphere_virtual_machine" "db_server01" {
-  name             = "aci-demo-db-server-managed"
+  name             = "tec-db-server-managed"
   resource_pool_id = "${data.vsphere_compute_cluster.cluster.resource_pool_id}"
   datastore_id     = "${data.vsphere_datastore.datastore.id}"
 
@@ -234,7 +234,7 @@ resource "vsphere_virtual_machine" "db_server01" {
   }
 
   disk {
-    label            = "db_server_disk0"
+    label            = "tec_db_server_disk0"
     size             = "${data.vsphere_virtual_machine.template.disks.0.size}"
     eagerly_scrub    = "${data.vsphere_virtual_machine.template.disks.0.eagerly_scrub}"
     thin_provisioned = "${data.vsphere_virtual_machine.template.disks.0.thin_provisioned}"
@@ -245,7 +245,7 @@ resource "vsphere_virtual_machine" "db_server01" {
 
     customize {
       linux_options {
-        host_name = "aci-demo-db-server-managed"
+        host_name = "tec-db-server-managed"
         domain    = "onstak.local"
       }
 
