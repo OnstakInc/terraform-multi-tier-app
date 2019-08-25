@@ -80,8 +80,9 @@ resource "vsphere_virtual_machine" "lb_server01" {
       network_interface {
         ipv4_address    = "192.168.11.10"
         ipv4_netmask    = 24
-        dns_server_list = ["10.3.1.102"]
       }
+      
+      dns_server_list = ["10.3.1.102"]
 
       ipv4_gateway = "192.168.11.1"
     }
@@ -122,8 +123,9 @@ resource "vsphere_virtual_machine" "app_server01" {
       network_interface {
         ipv4_address    = "192.168.12.11"
         ipv4_netmask    = 24
-        dns_server_list = ["10.3.1.102"]
       }
+      
+      dns_server_list = ["10.3.1.102"]
 
       ipv4_gateway = "192.168.12.1"
     }
@@ -164,8 +166,9 @@ resource "vsphere_virtual_machine" "app_server02" {
       network_interface {
         ipv4_address    = "192.168.12.12"
         ipv4_netmask    = 24
-        dns_server_list = ["10.3.1.102"]
       }
+      
+      dns_server_list = ["10.3.1.102"]
 
       ipv4_gateway = "192.168.12.1"
     }
@@ -206,8 +209,9 @@ resource "vsphere_virtual_machine" "app_server03" {
       network_interface {
         ipv4_address    = "192.168.12.13"
         ipv4_netmask    = 24
-        dns_server_list = ["10.3.1.102"]
       }
+      
+      dns_server_list = ["10.3.1.102"]
 
       ipv4_gateway = "192.168.12.1"
     }
@@ -248,8 +252,9 @@ resource "vsphere_virtual_machine" "db_server01" {
       network_interface {
         ipv4_address    = "192.168.13.10"
         ipv4_netmask    = 24
-        dns_server_list = ["10.3.1.102"]
       }
+      
+      dns_server_list = ["10.3.1.102"]
 
       ipv4_gateway = "192.168.13.1"
     }
