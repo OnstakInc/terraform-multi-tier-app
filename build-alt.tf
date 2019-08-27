@@ -38,18 +38,8 @@ data "vsphere_network" "network_db" {
   datacenter_id = "${data.vsphere_datacenter.dc.id}"
 }
 
-data "vsphere_virtual_machine" "lb_template" {
-  name          = "tec-lb-template"
-  datacenter_id = "${data.vsphere_datacenter.dc.id}"
-}
-
-data "vsphere_virtual_machine" "app_template" {
-  name          = "tec-app-template"
-  datacenter_id = "${data.vsphere_datacenter.dc.id}"
-}
-
-data "vsphere_virtual_machine" "db_template" {
-  name          = "tec-db-template"
+data "vsphere_virtual_machine" "template" {
+  name          = "CentOS7 Template Updated"
   datacenter_id = "${data.vsphere_datacenter.dc.id}"
 }
 
@@ -79,7 +69,7 @@ resource "vsphere_virtual_machine" "lb_server01" {
   }
 
   clone {
-    template_uuid = "${data.vsphere_virtual_machine.lb_template.id}"
+    template_uuid = "${data.vsphere_virtual_machine.template.id}"
 
     customize {
       linux_options {
@@ -122,7 +112,7 @@ resource "vsphere_virtual_machine" "app_server01" {
   }
 
   clone {
-    template_uuid = "${data.vsphere_virtual_machine.app_template.id}"
+    template_uuid = "${data.vsphere_virtual_machine.template.id}"
 
     customize {
       linux_options {
@@ -165,7 +155,7 @@ resource "vsphere_virtual_machine" "app_server02" {
   }
 
   clone {
-    template_uuid = "${data.vsphere_virtual_machine.db_template.id}"
+    template_uuid = "${data.vsphere_virtual_machine.template.id}"
 
     customize {
       linux_options {
