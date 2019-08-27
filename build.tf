@@ -63,19 +63,19 @@ resource "vsphere_virtual_machine" "lb_server01" {
 
   num_cpus  = 1
   memory    = 1024
-  guest_id  = "${data.vsphere_virtual_machine.template.guest_id}"
-  scsi_type = "${data.vsphere_virtual_machine.template.scsi_type}"
+  guest_id  = "${data.vsphere_virtual_machine.lb_template.guest_id}"
+  scsi_type = "${data.vsphere_virtual_machine.lb_template.scsi_type}"
 
   network_interface {
     network_id   = "${data.vsphere_network.network_web.id}"
-    adapter_type = "${data.vsphere_virtual_machine.template.network_interface_types[0]}"
+    adapter_type = "${data.vsphere_virtual_machine.lb_template.network_interface_types[0]}"
   }
 
   disk {
     label            = "tec_lb_server_disk0"
-    size             = "${data.vsphere_virtual_machine.template.disks.0.size}"
-    eagerly_scrub    = "${data.vsphere_virtual_machine.template.disks.0.eagerly_scrub}"
-    thin_provisioned = "${data.vsphere_virtual_machine.template.disks.0.thin_provisioned}"
+    size             = "${data.vsphere_virtual_machine.lb_template.disks.0.size}"
+    eagerly_scrub    = "${data.vsphere_virtual_machine.lb_template.disks.0.eagerly_scrub}"
+    thin_provisioned = "${data.vsphere_virtual_machine.lb_template.disks.0.thin_provisioned}"
   }
 
   clone {
@@ -106,19 +106,19 @@ resource "vsphere_virtual_machine" "app_server01" {
 
   num_cpus  = 1
   memory    = 1024
-  guest_id  = "${data.vsphere_virtual_machine.template.guest_id}"
-  scsi_type = "${data.vsphere_virtual_machine.template.scsi_type}"
+  guest_id  = "${data.vsphere_virtual_machine.app_template.guest_id}"
+  scsi_type = "${data.vsphere_virtual_machine.app_template.scsi_type}"
 
   network_interface {
     network_id   = "${data.vsphere_network.network_app.id}"
-    adapter_type = "${data.vsphere_virtual_machine.template.network_interface_types[0]}"
+    adapter_type = "${data.vsphere_virtual_machine.app_template.network_interface_types[0]}"
   }
 
   disk {
     label            = "tec_app_server_disk0"
-    size             = "${data.vsphere_virtual_machine.template.disks.0.size}"
-    eagerly_scrub    = "${data.vsphere_virtual_machine.template.disks.0.eagerly_scrub}"
-    thin_provisioned = "${data.vsphere_virtual_machine.template.disks.0.thin_provisioned}"
+    size             = "${data.vsphere_virtual_machine.app_template.disks.0.size}"
+    eagerly_scrub    = "${data.vsphere_virtual_machine.app_template.disks.0.eagerly_scrub}"
+    thin_provisioned = "${data.vsphere_virtual_machine.app_template.disks.0.thin_provisioned}"
   }
 
   clone {
@@ -149,23 +149,23 @@ resource "vsphere_virtual_machine" "app_server02" {
 
   num_cpus  = 1
   memory    = 1024
-  guest_id  = "${data.vsphere_virtual_machine.template.guest_id}"
-  scsi_type = "${data.vsphere_virtual_machine.template.scsi_type}"
+  guest_id  = "${data.vsphere_virtual_machine.app_template.guest_id}"
+  scsi_type = "${data.vsphere_virtual_machine.app_template.scsi_type}"
 
   network_interface {
     network_id   = "${data.vsphere_network.network_app.id}"
-    adapter_type = "${data.vsphere_virtual_machine.template.network_interface_types[0]}"
+    adapter_type = "${data.vsphere_virtual_machine.app_template.network_interface_types[0]}"
   }
 
   disk {
     label            = "tec_app_server_disk0"
-    size             = "${data.vsphere_virtual_machine.template.disks.0.size}"
-    eagerly_scrub    = "${data.vsphere_virtual_machine.template.disks.0.eagerly_scrub}"
-    thin_provisioned = "${data.vsphere_virtual_machine.template.disks.0.thin_provisioned}"
+    size             = "${data.vsphere_virtual_machine.app_template.disks.0.size}"
+    eagerly_scrub    = "${data.vsphere_virtual_machine.app_template.disks.0.eagerly_scrub}"
+    thin_provisioned = "${data.vsphere_virtual_machine.app_template.disks.0.thin_provisioned}"
   }
 
   clone {
-    template_uuid = "${data.vsphere_virtual_machine.db_template.id}"
+    template_uuid = "${data.vsphere_virtual_machine.app_template.id}"
 
     customize {
       linux_options {
@@ -192,23 +192,23 @@ resource "vsphere_virtual_machine" "app_server03" {
 
   num_cpus  = 1
   memory    = 1024
-  guest_id  = "${data.vsphere_virtual_machine.template.guest_id}"
-  scsi_type = "${data.vsphere_virtual_machine.template.scsi_type}"
+  guest_id  = "${data.vsphere_virtual_machine.app_template.guest_id}"
+  scsi_type = "${data.vsphere_virtual_machine.app_template.scsi_type}"
 
   network_interface {
     network_id   = "${data.vsphere_network.network_app.id}"
-    adapter_type = "${data.vsphere_virtual_machine.template.network_interface_types[0]}"
+    adapter_type = "${data.vsphere_virtual_machine.app_template.network_interface_types[0]}"
   }
 
   disk {
     label            = "tec_app_server_disk0"
-    size             = "${data.vsphere_virtual_machine.template.disks.0.size}"
-    eagerly_scrub    = "${data.vsphere_virtual_machine.template.disks.0.eagerly_scrub}"
-    thin_provisioned = "${data.vsphere_virtual_machine.template.disks.0.thin_provisioned}"
+    size             = "${data.vsphere_virtual_machine.app_template.disks.0.size}"
+    eagerly_scrub    = "${data.vsphere_virtual_machine.app_template.disks.0.eagerly_scrub}"
+    thin_provisioned = "${data.vsphere_virtual_machine.app_template.disks.0.thin_provisioned}"
   }
 
   clone {
-    template_uuid = "${data.vsphere_virtual_machine.template.id}"
+    template_uuid = "${data.vsphere_virtual_machine.app_template.id}"
 
     customize {
       linux_options {
@@ -235,23 +235,23 @@ resource "vsphere_virtual_machine" "db_server01" {
 
   num_cpus  = 1
   memory    = 1024
-  guest_id  = "${data.vsphere_virtual_machine.template.guest_id}"
-  scsi_type = "${data.vsphere_virtual_machine.template.scsi_type}"
+  guest_id  = "${data.vsphere_virtual_machine.db_template.guest_id}"
+  scsi_type = "${data.vsphere_virtual_machine.db_template.scsi_type}"
 
   network_interface {
     network_id   = "${data.vsphere_network.network_db.id}"
-    adapter_type = "${data.vsphere_virtual_machine.template.network_interface_types[0]}"
+    adapter_type = "${data.vsphere_virtual_machine.db_template.network_interface_types[0]}"
   }
 
   disk {
     label            = "tec_db_server_disk0"
-    size             = "${data.vsphere_virtual_machine.template.disks.0.size}"
-    eagerly_scrub    = "${data.vsphere_virtual_machine.template.disks.0.eagerly_scrub}"
-    thin_provisioned = "${data.vsphere_virtual_machine.template.disks.0.thin_provisioned}"
+    size             = "${data.vsphere_virtual_machine.db_template.disks.0.size}"
+    eagerly_scrub    = "${data.vsphere_virtual_machine.db_template.disks.0.eagerly_scrub}"
+    thin_provisioned = "${data.vsphere_virtual_machine.db_template.disks.0.thin_provisioned}"
   }
 
   clone {
-    template_uuid = "${data.vsphere_virtual_machine.template.id}"
+    template_uuid = "${data.vsphere_virtual_machine.db_template.id}"
 
     customize {
       linux_options {
