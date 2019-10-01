@@ -233,8 +233,8 @@ resource "vsphere_virtual_machine" "db_server01" {
   resource_pool_id = "${data.vsphere_compute_cluster.cluster.resource_pool_id}"
   datastore_id     = "${data.vsphere_datastore.datastore.id}"
 
-  num_cpus  = 1
-  memory    = 1024
+  num_cpus  = 2
+  memory    = 2048
   guest_id  = "${data.vsphere_virtual_machine.db_template.guest_id}"
   scsi_type = "${data.vsphere_virtual_machine.db_template.scsi_type}"
 
