@@ -62,7 +62,7 @@ resource "vsphere_virtual_machine" "lb_server01" {
   datastore_id     = "${data.vsphere_datastore.datastore.id}"
 
   num_cpus  = 1
-  memory    = 1024
+  memory    = 2048
   guest_id  = "${data.vsphere_virtual_machine.lb_template.guest_id}"
   scsi_type = "${data.vsphere_virtual_machine.lb_template.scsi_type}"
 
