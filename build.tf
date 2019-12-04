@@ -10,7 +10,7 @@ provider "vsphere" {
 # name. These are called upon later when provisioning the VM resource
 
 data "vsphere_datacenter" "dc" {
-  name = "Milpitas-DC"
+  name = "SJC-SDDC"
 }
 
 data "vsphere_datastore" "datastore" {
@@ -19,7 +19,7 @@ data "vsphere_datastore" "datastore" {
 }
 
 data "vsphere_compute_cluster" "cluster" {
-  name          = "HX-Cluster-01"
+  name          = "Cisco-HX-Cluster"
   datacenter_id = "${data.vsphere_datacenter.dc.id}"
 }
 
